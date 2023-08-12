@@ -23,4 +23,4 @@ export const tasksApiSlice = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useAddTaskMutation } = tasksApiSlice;
+export const { useAddTaskMutation, useGetTasksQuery } = tasksApiSlice;

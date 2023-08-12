@@ -1,5 +1,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ThemeState } from "./contexts/themeContext";
+import { useCookies } from "react-cookie";
 import Layout from "./Layout";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -9,6 +10,9 @@ import "react-toastify/dist/ReactToastify.css";
 import Verify from "./pages/Verify";
 import PrivateRoute from "./components/PrivateRoute";
 import Profile from "./pages/Profile";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { setCredentials } from "./slices/authSlice";
 
 const router = createBrowserRouter([
   {
@@ -45,6 +49,17 @@ const router = createBrowserRouter([
 
 function App() {
   const { theme } = ThemeState();
+
+  const [cookies] = useCookies(["token"]);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const token = cookies.token;
+
+    if (token) {
+      dispatch(setCredentials({ token }));
+    }
+  }, [cookies.token, dispatch]);
 
   return (
     <>
