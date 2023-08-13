@@ -1,16 +1,34 @@
 import { useState } from "react";
-// import { useDispatch } from "react-redux";
+import {
+  useDeleteTaskMutation,
+  useUpdateTaskMutation,
+} from "../slices/tasksApiSlice";
+import { toast } from "react-toastify";
 
-const Task = ({ title, status, taskId, index }) => {
+const Task = ({ title, status, taskId }) => {
   const [completed, setCompleted] = useState(status);
 
-  //   const dispatch = useDispatch();
+  const [updateTask] = useUpdateTaskMutation();
+
+  const [deleteTask, { data }] = useDeleteTaskMutation();
 
   const handleCheckbox = async () => {
     setCompleted(!completed);
+    try {
+      await updateTask({ taskId }).unwrap();
+    } catch (err) {
+      toast.error(err?.data?.message || err.error);
+    }
   };
 
-  const deleteTodoHandler = async () => {};
+  const deleteTodoHandler = async () => {
+    try {
+      await deleteTask({ taskId }).unwrap();
+      toast.success(data?.message);
+    } catch (err) {
+      toast.error(err?.data?.message || err.error);
+    }
+  };
 
   return (
     <div className="cursor-pointer w-full h-[60px] bg-Very-Light-Gray dark:bg-Very-Dark-Grayish-Blue flex items-center justify-between px-4 text-lg text-Very-Dark-Desaturated-Blue dark:text-Very-Light-Grayish-Blue border-b border-b-Very-Light-Grayish-Blue dark:border-b-Dark-Grayish-Blue">

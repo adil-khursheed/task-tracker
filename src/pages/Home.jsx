@@ -2,14 +2,23 @@
 import TodoInput from "../components/TodoInput";
 import Task from "../components/Task";
 import { useState } from "react";
-import { useGetTasksQuery } from "../slices/tasksApiSlice";
+import {
+  useDeleteCompletedTaskMutation,
+  useGetActiveTasksQuery,
+  useGetCompletedTasksQuery,
+  useGetTasksQuery,
+} from "../slices/tasksApiSlice";
 import Loader from "../components/Loader";
+import { toast } from "react-toastify";
 
 const Home = () => {
-  // const { userInfo } = useSelector((state) => state.auth);
+  const { data: allTasks, isLoading: allTasksLoading } = useGetTasksQuery();
 
-  const { data, isLoading } = useGetTasksQuery();
-  console.log(data);
+  const { data: allActiveTasks, isLoading: activeTasksLoading } =
+    useGetActiveTasksQuery();
+
+  const { data: allCompletedTasks, isLoading: completedTasksLoading } =
+    useGetCompletedTasksQuery();
 
   const tabs = [
     {
@@ -17,18 +26,18 @@ const Home = () => {
       label: "All",
       content: (
         <>
-          {isLoading ? (
+          {allTasksLoading ? (
             <Loader />
           ) : (
             <>
               <div>
-                {data && data.length <= 0 ? (
+                {allTasks && allTasks.tasks.length <= 0 ? (
                   <p className="flex justify-center items-center py-6 text-Dark-Grayish-Blue text-lg">
                     No Tasks Yet
                   </p>
                 ) : (
-                  data &&
-                  data.map((task, index) => (
+                  allTasks &&
+                  allTasks.tasks.map((task, index) => (
                     <Task
                       key={task._id}
                       title={task.title}
@@ -44,54 +53,71 @@ const Home = () => {
         </>
       ),
     },
-    // {
-    //   id: "tab2",
-    //   label: "Active",
-    //   content: (
-    //     <div>
-    //       {userInfo && userInfo.user.activeTasks.length <= 0 ? (
-    //         <p className="flex justify-center items-center py-6 text-Dark-Grayish-Blue text-lg">
-    //           No Active Tasks
-    //         </p>
-    //       ) : (
-    //         userInfo &&
-    //         userInfo.user.activeTasks.map((task, index) => (
-    //           <Task
-    //             key={task._id}
-    //             title={task.title}
-    //             status={task.completed}
-    //             taskId={task._id}
-    //             index={index}
-    //           />
-    //         ))
-    //       )}
-    //     </div>
-    //   ),
-    // },
-    // {
-    //   id: "tab3",
-    //   label: "Completed",
-    //   content: (
-    //     <div>
-    //       {userInfo && userInfo.user.completedTasks.length <= 0 ? (
-    //         <p className="flex justify-center items-center py-6 text-Dark-Grayish-Blue text-lg">
-    //           No Completed Tasks
-    //         </p>
-    //       ) : (
-    //         userInfo &&
-    //         userInfo.user.completedTasks.map((task, index) => (
-    //           <Task
-    //             key={task._id}
-    //             title={task.title}
-    //             status={task.completed}
-    //             taskId={task._id}
-    //             index={index}
-    //           />
-    //         ))
-    //       )}
-    //     </div>
-    //   ),
-    // },
+    {
+      id: "tab2",
+      label: "Active",
+      content: (
+        <>
+          {activeTasksLoading ? (
+            <Loader />
+          ) : (
+            <>
+              <div>
+                {allActiveTasks && allActiveTasks.activeTasks.length <= 0 ? (
+                  <p className="flex justify-center items-center py-6 text-Dark-Grayish-Blue text-lg">
+                    No Active Tasks
+                  </p>
+                ) : (
+                  allActiveTasks &&
+                  allActiveTasks.activeTasks.map((task, index) => (
+                    <Task
+                      key={task._id}
+                      title={task.title}
+                      status={task.completed}
+                      taskId={task._id}
+                      index={index}
+                    />
+                  ))
+                )}
+              </div>
+            </>
+          )}
+        </>
+      ),
+    },
+    {
+      id: "tab3",
+      label: "Completed",
+      content: (
+        <>
+          {completedTasksLoading ? (
+            <Loader />
+          ) : (
+            <>
+              <div>
+                {allCompletedTasks &&
+                allCompletedTasks.completedTasks.length <= 0 ? (
+                  <p className="flex justify-center items-center py-6 text-Dark-Grayish-Blue text-lg">
+                    No Completed Tasks
+                  </p>
+                ) : (
+                  allCompletedTasks &&
+                  allCompletedTasks.completedTasks.map((task, index) => (
+                    <Task
+                      key={task._id}
+                      title={task.title}
+                      status={task.completed}
+                      taskId={task._id}
+                      index={index}
+                    />
+                  ))
+                )}
+              </div>
+            </>
+          )}
+        </>
+      ),
+    },
   ];
 
   const [activeTab, setActiveTab] = useState(tabs[0].id);
@@ -102,7 +128,16 @@ const Home = () => {
 
   const activeTabContent = tabs.find((tab) => tab.id === activeTab).content;
 
-  const clearCompletedHandler = async () => {};
+  const [deleteCompletedTask, { data }] = useDeleteCompletedTaskMutation();
+
+  const clearCompletedHandler = async () => {
+    try {
+      await deleteCompletedTask().unwrap();
+      toast.success(data?.message);
+    } catch (err) {
+      toast.error(err?.data?.message || err.error);
+    }
+  };
 
   return (
     <>
@@ -112,7 +147,9 @@ const Home = () => {
         <div>{activeTabContent}</div>
 
         <div className="relative flex justify-between items-center px-4 h-[45px]">
-          <p className="text-sm text-Dark-Grayish-Blue">0 items left</p>
+          <p className="text-sm text-Dark-Grayish-Blue">
+            {allActiveTasks?.activeTasks.length} items left
+          </p>
           <div className="absolute sm:relative w-full sm:w-0 -bottom-20 sm:bottom-0 rounded-[4px] left-0 text-sm text-Dark-Grayish-Blue font-bold flex justify-center gap-4 bg-Very-Light-Gray dark:bg-Very-Dark-Grayish-Blue sm:bg-transparent sm:dark:bg-transparent h-[60px] shadow-sm sm:shadow-none shadow-Light-Grayish-Blue dark:shadow-Very-Dark-Desaturated-Blue text-md">
             {tabs.map((tab) => (
               <button
