@@ -1,13 +1,13 @@
 import { apiSlice } from "./apiSlice";
 
-// const USERS_URL = "";
+const USERS_URL = "api/v1";
 
 export const tasksApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     // Get All Tasks
     getTasks: builder.query({
       query: () => ({
-        url: `/alltasks`,
+        url: `${USERS_URL}/alltasks`,
         method: "GET",
       }),
       providesTags: ["Task"],
@@ -16,7 +16,7 @@ export const tasksApiSlice = apiSlice.injectEndpoints({
     // Get All Active Tasks
     getActiveTasks: builder.query({
       query: () => ({
-        url: `/activetasks`,
+        url: `${USERS_URL}/activetasks`,
         method: "GET",
       }),
       providesTags: ["Task"],
@@ -25,7 +25,7 @@ export const tasksApiSlice = apiSlice.injectEndpoints({
     // Get All Completed Tasks
     getCompletedTasks: builder.query({
       query: () => ({
-        url: `/completedtasks`,
+        url: `${USERS_URL}/completedtasks`,
         method: "GET",
       }),
       providesTags: ["Task"],
@@ -34,7 +34,7 @@ export const tasksApiSlice = apiSlice.injectEndpoints({
     // Add New Task
     addTask: builder.mutation({
       query: (data) => ({
-        url: `/newtask`,
+        url: `${USERS_URL}/newtask`,
         method: "POST",
         body: data,
         headers: {
@@ -47,7 +47,7 @@ export const tasksApiSlice = apiSlice.injectEndpoints({
     // Update Task
     updateTask: builder.mutation({
       query: ({ taskId }) => ({
-        url: `/task/${taskId}`,
+        url: `${USERS_URL}/task/${taskId}`,
         method: "PUT",
       }),
       invalidatesTags: ["Task"],
@@ -56,7 +56,7 @@ export const tasksApiSlice = apiSlice.injectEndpoints({
     // Delete Task
     deleteTask: builder.mutation({
       query: ({ taskId }) => ({
-        url: `/task/${taskId}`,
+        url: `${USERS_URL}/task/${taskId}`,
         method: "DELETE",
       }),
       invalidatesTags: ["Task"],
@@ -65,7 +65,7 @@ export const tasksApiSlice = apiSlice.injectEndpoints({
     // Clear Completed Tasks
     deleteCompletedTask: builder.mutation({
       query: () => ({
-        url: `/clearcompleted`,
+        url: `${USERS_URL}/clearcompleted`,
         method: "DELETE",
       }),
       invalidatesTags: ["Task"],
