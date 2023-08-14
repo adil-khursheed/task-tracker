@@ -9,7 +9,6 @@ export const usersApiSlice = apiSlice.injectEndpoints({
         url: `/login`,
         method: "POST",
         body: data,
-        credentials: "include",
       }),
     }),
     register: builder.mutation({
@@ -17,7 +16,6 @@ export const usersApiSlice = apiSlice.injectEndpoints({
         url: `/register`,
         method: "POST",
         body: data,
-        credentials: "include",
       }),
     }),
     verify: builder.mutation({
@@ -25,14 +23,12 @@ export const usersApiSlice = apiSlice.injectEndpoints({
         url: `/verify`,
         method: "POST",
         body: data,
-        credentials: "include",
       }),
     }),
     logout: builder.mutation({
       query: () => ({
         url: `/logout`,
         method: "POST",
-        credentials: "include",
       }),
     }),
     forgotPassword: builder.mutation({
@@ -40,7 +36,6 @@ export const usersApiSlice = apiSlice.injectEndpoints({
         url: `/forgotpassword`,
         method: "POST",
         body: data,
-        credentials: "include",
       }),
     }),
     resetPassword: builder.mutation({
@@ -48,7 +43,20 @@ export const usersApiSlice = apiSlice.injectEndpoints({
         url: `/resetpassword`,
         method: "PUT",
         body: data,
-        credentials: "include",
+      }),
+    }),
+    updateProfile: builder.mutation({
+      query: (data) => ({
+        url: `/updateprofile`,
+        method: "PUT",
+        body: data,
+      }),
+    }),
+    changePassword: builder.mutation({
+      query: (data) => ({
+        url: `/updatepassword`,
+        method: "PUT",
+        body: data,
       }),
     }),
   }),
@@ -61,4 +69,6 @@ export const {
   useVerifyMutation,
   useForgotPasswordMutation,
   useResetPasswordMutation,
+  useUpdateProfileMutation,
+  useChangePasswordMutation,
 } = usersApiSlice;

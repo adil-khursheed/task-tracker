@@ -47,7 +47,7 @@ const Header = () => {
           {userInfo && (
             <div className="w-10 h-10 rounded-full">
               <img
-                src={userInfo.user.avatar.url}
+                src={userInfo?.user?.avatar?.url}
                 alt=""
                 className="w-full h-full object-cover object-top rounded-full"
               />
