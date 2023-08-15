@@ -9,6 +9,7 @@ export const tasksApiSlice = apiSlice.injectEndpoints({
       query: () => ({
         url: `${USERS_URL}/alltasks`,
         method: "GET",
+        credentials: "include",
       }),
       providesTags: ["Task"],
     }),
@@ -18,6 +19,7 @@ export const tasksApiSlice = apiSlice.injectEndpoints({
       query: () => ({
         url: `${USERS_URL}/activetasks`,
         method: "GET",
+        credentials: "include",
       }),
       providesTags: ["Task"],
     }),
@@ -27,6 +29,7 @@ export const tasksApiSlice = apiSlice.injectEndpoints({
       query: () => ({
         url: `${USERS_URL}/completedtasks`,
         method: "GET",
+        credentials: "include",
       }),
       providesTags: ["Task"],
     }),
@@ -40,6 +43,7 @@ export const tasksApiSlice = apiSlice.injectEndpoints({
         headers: {
           "Content-type": "application/json; charset=UTF-8",
         },
+        credentials: "include",
       }),
       invalidatesTags: ["Task"],
     }),
@@ -49,6 +53,7 @@ export const tasksApiSlice = apiSlice.injectEndpoints({
       query: ({ taskId }) => ({
         url: `${USERS_URL}/task/${taskId}`,
         method: "PUT",
+        credentials: "include",
       }),
       invalidatesTags: ["Task"],
     }),
@@ -58,6 +63,7 @@ export const tasksApiSlice = apiSlice.injectEndpoints({
       query: ({ taskId }) => ({
         url: `${USERS_URL}/task/${taskId}`,
         method: "DELETE",
+        credentials: "include",
       }),
       invalidatesTags: ["Task"],
     }),
@@ -67,6 +73,7 @@ export const tasksApiSlice = apiSlice.injectEndpoints({
       query: () => ({
         url: `${USERS_URL}/clearcompleted`,
         method: "DELETE",
+        credentials: "include",
       }),
       invalidatesTags: ["Task"],
     }),
