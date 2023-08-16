@@ -10,7 +10,7 @@ export const usersApiSlice = apiSlice.injectEndpoints({
         method: "POST",
         body: data,
         headers: {
-          "content-type": "multipart/form-data",
+          "content-type": "multipart/form-data; charset=UTF-8",
         },
         credentials: "include",
       }),
