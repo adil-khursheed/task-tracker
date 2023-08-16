@@ -4,27 +4,37 @@ const USERS_URL = "api/v1";
 
 export const usersApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    login: builder.mutation({
-      query: (data) => ({
-        url: `${USERS_URL}/login`,
-        method: "POST",
-        body: data,
-        credentials: "include",
-      }),
-    }),
     register: builder.mutation({
       query: (data) => ({
         url: `${USERS_URL}/register`,
         method: "POST",
         body: data,
+        headers: {
+          "content-type": "multipart/form-data",
+        },
         credentials: "include",
       }),
     }),
+    login: builder.mutation({
+      query: (data) => ({
+        url: `${USERS_URL}/login`,
+        method: "POST",
+        body: data,
+        headers: {
+          "content-type": "application/json",
+        },
+        credentials: "include",
+      }),
+    }),
+
     verify: builder.mutation({
       query: (data) => ({
         url: `${USERS_URL}/verify`,
         method: "POST",
         body: data,
+        headers: {
+          "content-type": "application/json",
+        },
         credentials: "include",
       }),
     }),
@@ -40,6 +50,9 @@ export const usersApiSlice = apiSlice.injectEndpoints({
         url: `${USERS_URL}/forgotpassword`,
         method: "POST",
         body: data,
+        headers: {
+          "content-type": "application/json",
+        },
         credentials: "include",
       }),
     }),
@@ -48,6 +61,9 @@ export const usersApiSlice = apiSlice.injectEndpoints({
         url: `${USERS_URL}/resetpassword`,
         method: "PUT",
         body: data,
+        headers: {
+          "content-type": "application/json",
+        },
         credentials: "include",
       }),
     }),
@@ -56,6 +72,9 @@ export const usersApiSlice = apiSlice.injectEndpoints({
         url: `${USERS_URL}/updateprofile`,
         method: "PUT",
         body: data,
+        headers: {
+          "content-type": "multipart/form-data",
+        },
         credentials: "include",
       }),
     }),
@@ -64,6 +83,9 @@ export const usersApiSlice = apiSlice.injectEndpoints({
         url: `${USERS_URL}/updatepassword`,
         method: "PUT",
         body: data,
+        headers: {
+          "content-type": "application/json",
+        },
         credentials: "include",
       }),
     }),
