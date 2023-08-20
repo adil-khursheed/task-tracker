@@ -2,20 +2,15 @@ import { apiSlice } from "./apiSlice";
 
 const USERS_URL = "api/v1";
 
-// const boundary = "---------------------------" + Date.now().toString(16);
-
 export const usersApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     register: builder.mutation({
       query: (data) => ({
         url: `${USERS_URL}/register`,
-        mode: "no-cors",
         method: "POST",
         body: data,
         headers: {
-          "Content-Type": `multipart/form-data`,
-          Accept: "application/json",
-          type: "formData",
+          "content-type": "multipart/form-data",
         },
         credentials: "include",
       }),
