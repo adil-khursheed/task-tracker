@@ -2,7 +2,7 @@ import { apiSlice } from "./apiSlice";
 
 const USERS_URL = "api/v1";
 
-const boundary = "---------------------------" + Date.now().toString(16);
+// const boundary = "---------------------------" + Date.now().toString(16);
 
 export const usersApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -13,7 +13,9 @@ export const usersApiSlice = apiSlice.injectEndpoints({
         method: "POST",
         body: data,
         headers: {
-          "content-type": `multipart/form-data; boundary=${boundary}`,
+          "Content-Type": `multipart/form-data`,
+          Accept: "application/json",
+          type: "formData",
         },
         credentials: "include",
       }),
