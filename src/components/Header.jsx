@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { useLogoutMutation } from "../slices/usersApiSlice";
 import { logout } from "../slices/authSlice";
+import { toast } from "react-toastify";
 
 const Header = () => {
   const [toggle, setToggle] = useState(false);
@@ -16,15 +17,16 @@ const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [logoutApiCall] = useLogoutMutation();
+  const [logoutApiCall, { data }] = useLogoutMutation();
 
   const logoutHandler = async () => {
     try {
       await logoutApiCall().unwrap();
       dispatch(logout());
       navigate("/login");
+      toast.success(data?.message);
     } catch (error) {
-      console.log(error);
+      toast.error(error);
     }
   };
 

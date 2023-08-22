@@ -77,7 +77,7 @@ function App() {
           className="w-full h-full object-cover object-center"
         />
       </header>
-      <ToastContainer autoClose={2000} />
+      <ToastContainer autoClose={3000} />
       <RouterProvider router={router} />
     </>
   );

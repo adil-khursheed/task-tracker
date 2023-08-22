@@ -68,11 +68,11 @@ const UpdateProfile = () => {
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Your Name"
-            className="w-full h-[45px] px-4 rounded-[4px] bg-Very-Dark-Grayish-Blue dark:bg-Very-Light-Gray border-none outline-none text-Very-Light-Gray dark:text-Very-Dark-Desaturated-Blue"
+            className="w-full input__bg"
           />
           <label
             htmlFor="avatar"
-            className="cursor-pointer w-full bg-Very-Dark-Grayish-Blue dark:bg-Very-Light-Gray h-[45px] flex items-center justify-center rounded-[4px] text-Very-Light-Gray dark:text-Very-Dark-Desaturated-Blue">
+            className="cursor-pointer w-full flex items-center justify-center input__bg">
             <input
               type="file"
               id="avatar"
@@ -82,9 +82,7 @@ const UpdateProfile = () => {
             />
             Choose image
           </label>
-          <button
-            type="submit"
-            className="w-full bg-Bright-Blue h-[45px] rounded-[4px] text-Very-Light-Gray text-base">
+          <button type="submit" className="w-full input__btn">
             Update
           </button>
         </form>

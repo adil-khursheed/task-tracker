@@ -34,18 +34,16 @@ const ChangePassword = () => {
             value={oldPassword}
             onChange={(e) => setOldPassword(e.target.value)}
             placeholder="Old Password"
-            className="h-[45px] px-4 rounded-[4px] bg-Very-Dark-Grayish-Blue dark:bg-Very-Light-Gray border-none outline-none text-Very-Light-Gray dark:text-Very-Dark-Desaturated-Blue"
+            className="input__bg"
           />
           <input
             type="text"
             value={newPassword}
             onChange={(e) => setNewPassword(e.target.value)}
             placeholder="New Password"
-            className="h-[45px] px-4 rounded-[4px] bg-Very-Dark-Grayish-Blue dark:bg-Very-Light-Gray border-none outline-none text-Very-Light-Gray dark:text-Very-Dark-Desaturated-Blue"
+            className="input__bg"
           />
-          <button
-            type="submit"
-            className="w-full bg-Bright-Blue h-[45px] rounded-[4px] text-Very-Light-Gray text-base">
+          <button type="submit" className="w-full input__btn">
             Change
           </button>
         </form>
