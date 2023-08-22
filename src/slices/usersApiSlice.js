@@ -9,10 +9,11 @@ export const usersApiSlice = apiSlice.injectEndpoints({
         url: `${USERS_URL}/register`,
         method: "POST",
         body: data,
-        headers: {
-          "content-type": "multipart/form-data",
-        },
+        // headers: {
+        //   "Content-Type": "multipart/form-data",
+        // },
         credentials: "include",
+        // formData: true,
       }),
     }),
     login: builder.mutation({
@@ -72,9 +73,9 @@ export const usersApiSlice = apiSlice.injectEndpoints({
         url: `${USERS_URL}/updateprofile`,
         method: "PUT",
         body: data,
-        headers: {
-          "content-type": "multipart/form-data",
-        },
+        // headers: {
+        //   "content-type": "multipart/form-data",
+        // },
         credentials: "include",
       }),
     }),

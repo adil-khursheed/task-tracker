@@ -35,6 +35,8 @@ const UpdateProfile = () => {
     myForm.append("name", name);
     myForm.append("avatar", image);
 
+    // console.log(myForm);
+
     try {
       const res = await updateProfile(myForm).unwrap();
       dispatch(setCredentials(res));
