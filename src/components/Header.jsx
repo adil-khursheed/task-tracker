@@ -17,14 +17,14 @@ const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [logoutApiCall, { data }] = useLogoutMutation();
+  const [logoutApiCall] = useLogoutMutation();
 
   const logoutHandler = async () => {
     try {
       await logoutApiCall().unwrap();
       dispatch(logout());
       navigate("/login");
-      toast.success(data?.message);
+      toast.success("Logged out successfully!");
     } catch (error) {
       toast.error(error);
     }
